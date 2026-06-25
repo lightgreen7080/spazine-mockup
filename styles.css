@@ -511,132 +511,6 @@ h3 {
   background: var(--gold);
 }
 
-.result-layout {
-  display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
-  gap: 22px;
-}
-
-.mini-map {
-  position: relative;
-  min-height: 360px;
-  overflow: hidden;
-  border: 2px solid #20313f;
-  border-radius: 18px;
-  background:
-    linear-gradient(90deg, rgba(32, 49, 63, 0.08) 1px, transparent 1px),
-    linear-gradient(rgba(32, 49, 63, 0.08) 1px, transparent 1px),
-    #fffef8;
-  background-size: 44px 44px;
-  box-shadow: 0 8px 0 rgba(32, 49, 63, 0.1);
-}
-
-.mini-map::before,
-.mini-map::after {
-  content: "";
-  position: absolute;
-  border-radius: 999px;
-  background: rgba(255, 189, 62, 0.3);
-}
-
-.mini-map::before {
-  width: 260px;
-  height: 64px;
-  left: 34px;
-  top: 84px;
-  transform: rotate(-28deg);
-}
-
-.mini-map::after {
-  width: 320px;
-  height: 58px;
-  right: -40px;
-  bottom: 78px;
-  transform: rotate(22deg);
-}
-
-.mini-map p {
-  position: absolute;
-  left: 22px;
-  bottom: 18px;
-  z-index: 1;
-  margin: 0;
-  color: var(--muted);
-  font-weight: 800;
-}
-
-.map-pin {
-  position: absolute;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border: 3px solid #fff;
-  border-radius: 50% 50% 50% 4px;
-  color: #fff;
-  background: var(--coral);
-  box-shadow: 0 8px 0 rgba(32, 49, 63, 0.18);
-  transform: rotate(-45deg);
-  font-weight: 900;
-}
-
-.map-pin span,
-.map-pin {
-  line-height: 1;
-}
-
-.map-pin {
-  font-size: 13px;
-}
-
-.pin-one {
-  left: 112px;
-  top: 82px;
-}
-
-.pin-two {
-  right: 92px;
-  top: 168px;
-  background: var(--teal);
-}
-
-.pin-three {
-  left: 168px;
-  bottom: 98px;
-  background: var(--gold);
-}
-
-.results {
-  display: grid;
-  gap: 14px;
-}
-
-.facility-card {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 18px;
-  padding: 18px;
-  border: 2px solid #20313f;
-  border-radius: 18px;
-  background: #ffffff;
-  box-shadow: 0 7px 0 rgba(32, 49, 63, 0.1);
-}
-
-.facility-card:nth-child(2n) {
-  background: #fff9db;
-}
-
-.facility-card h3 {
-  margin-bottom: 8px;
-  color: var(--teal-dark);
-}
-
-.facility-card p {
-  color: var(--muted);
-  line-height: 1.65;
-}
-
 .meta-line {
   display: flex;
   flex-wrap: wrap;
@@ -876,14 +750,9 @@ h3 {
     width: 110px;
   }
 
-  .result-layout,
   .two-column,
   .detail-preview {
     grid-template-columns: 1fr;
-  }
-
-  .mini-map {
-    min-height: 230px;
   }
 }
 
@@ -909,7 +778,6 @@ h3 {
 
   .finder-head,
   .section-heading,
-  .facility-card,
   .site-footer {
     display: grid;
   }

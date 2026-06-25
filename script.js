@@ -46,7 +46,6 @@ const facilities = [
   }
 ];
 
-const results = document.querySelector("#results");
 const statusText = document.querySelector("#finderStatus");
 const moodInput = document.querySelector("#moodInput");
 const oracleButton = document.querySelector("#oracleButton");
@@ -178,34 +177,14 @@ function renderPrescriptionLinks(prescription) {
 }
 
 function renderFacilities(mood = "reset", prescription = defaultPrescription) {
-  const filtered = facilities.filter((facility) => facility.moods.includes(mood)).slice(0, 3);
   const character = chooseCharacter(mood);
-  statusText.textContent = `${filtered.length}件を処方中`;
+  statusText.textContent = prescription.facility === "入力待ち" ? "湯の処方中" : "処方せん完成";
   fortuneText.textContent = prescription.fortune;
   facilityPick.textContent = prescription.facility;
   bathPick.textContent = prescription.bath;
   methodPick.textContent = prescription.method;
   renderCharacter(character, prescription);
   renderPrescriptionLinks(prescription);
-  results.innerHTML = filtered
-    .map((facility) => {
-      const tags = facility.tags.map((tag) => `<span>${tag}</span>`).join("");
-      return `
-        <article class="facility-card">
-          <div>
-            <h3>${facility.name}</h3>
-            <p>${facility.area} / ${facility.type}</p>
-            <p>${facility.copy}</p>
-            <div class="meta-line">${tags}</div>
-          </div>
-          <div class="card-actions">
-            <button type="button" aria-label="${facility.name}をいきたい湯に登録">♡ 登録</button>
-            <a href="#detail-title">詳細</a>
-          </div>
-        </article>
-      `;
-    })
-    .join("");
 }
 
 function readMood(text) {
