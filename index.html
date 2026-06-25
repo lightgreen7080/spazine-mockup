@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>スパ人 SPAZINE | モックアップ</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="スパ人 トップ">
+        <span class="brand-mark">湯</span>
+        <span>
+          <strong>スパ人</strong>
+          <small>SPAZINE</small>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="主要メニュー">
+        <a href="#guide">おすすめ</a>
+        <a href="#area">エリア</a>
+        <a href="#journal">温浴通信</a>
+        <a href="#about">スパ人について</a>
+      </nav>
+      <button class="want-button" type="button" aria-label="いきたい湯を見る">
+        <span class="icon" aria-hidden="true">♡</span>
+        <span>いきたい湯</span>
+      </button>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <img class="hero-image" src="assets/onsen-hero.png" alt="落ち着いた温浴施設の外観イメージ">
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <p class="eyebrow">温泉・サウナ・銭湯を、今の気分から</p>
+          <h1 id="hero-title">今日のつかれ、<br>どこで流しますか。</h1>
+          <p class="hero-copy">
+            あなたの街の温浴施設を、スパ人がご案内します。
+            近くでも、少し遠くでも、今の気分に合う一湯へ。
+          </p>
+        </div>
+      </section>
+
+      <section class="finder-band" id="guide" aria-label="気分から探す">
+        <div class="finder">
+          <div class="finder-head">
+            <div>
+              <p class="section-kicker">SPAZINE GUIDE</p>
+              <h2>今のあなたに合う施設</h2>
+            </div>
+            <p class="finder-status" id="finderStatus">3件をおすすめ中</p>
+          </div>
+
+          <div class="choice-grid" aria-label="気分を選ぶ">
+            <button class="choice is-active" type="button" data-mood="reset">
+              <span class="choice-icon">◎</span>
+              <span>おまかせ</span>
+            </button>
+            <button class="choice" type="button" data-mood="solo">
+              <span class="choice-icon">静</span>
+              <span>ひとりで整う</span>
+            </button>
+            <button class="choice" type="button" data-mood="family">
+              <span class="choice-icon">家</span>
+              <span>家族でゆっくり</span>
+            </button>
+            <button class="choice" type="button" data-mood="sauna">
+              <span class="choice-icon">熱</span>
+              <span>サウナ重視</span>
+            </button>
+            <button class="choice" type="button" data-mood="near">
+              <span class="choice-icon">近</span>
+              <span>近場でさっと</span>
+            </button>
+            <button class="choice" type="button" data-mood="trip">
+              <span class="choice-icon">旅</span>
+              <span>少し遠出</span>
+            </button>
+          </div>
+
+          <div class="result-layout">
+            <aside class="mini-map" aria-label="周辺エリア">
+              <div class="map-pin pin-one">1</div>
+              <div class="map-pin pin-two">2</div>
+              <div class="map-pin pin-three">3</div>
+              <p>現在地周辺</p>
+            </aside>
+            <div class="results" id="results" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="area-band" id="area" aria-labelledby="area-title">
+        <div class="section-inner two-column">
+          <div>
+            <p class="section-kicker">AREA SEARCH</p>
+            <h2 id="area-title">エリアからも探せます</h2>
+            <p>
+              都道府県、市区町村、施設名からの検索導線も残し、提案型の入口と併用できる構成です。
+            </p>
+          </div>
+          <form class="search-panel" aria-label="施設検索">
+            <label>
+              <span>都道府県</span>
+              <select>
+                <option>愛知県</option>
+                <option>岐阜県</option>
+                <option>三重県</option>
+              </select>
+            </label>
+            <label>
+              <span>キーワード</span>
+              <input type="search" value="露天風呂 サウナ">
+            </label>
+            <button type="button">施設を探す</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="detail-band" aria-labelledby="detail-title">
+        <div class="section-inner">
+          <p class="section-kicker">FACILITY DETAIL</p>
+          <h2 id="detail-title">施設詳細は、更新しやすくシンプルに</h2>
+          <article class="detail-preview">
+            <div>
+              <p class="tagline">おすすめ施設</p>
+              <h3>森ノ湯テラス</h3>
+              <p>
+                緑に囲まれた露天風呂と、広めの休憩スペースがある日帰り温泉。
+                仕事帰りにも休日の小旅行にも選びやすい一軒です。
+              </p>
+              <div class="tag-row">
+                <span>露天風呂</span>
+                <span>サウナ</span>
+                <span>駐車場あり</span>
+                <span>ひとり時間</span>
+              </div>
+            </div>
+            <dl class="info-list">
+              <div>
+                <dt>所在地</dt>
+                <dd>愛知県名古屋市</dd>
+              </div>
+              <div>
+                <dt>営業時間</dt>
+                <dd>10:00 - 23:00</dd>
+              </div>
+              <div>
+                <dt>料金</dt>
+                <dd>大人 980円</dd>
+              </div>
+              <div>
+                <dt>外部情報</dt>
+                <dd>公式サイト・SNSへリンク</dd>
+              </div>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+      <section class="journal-band" id="journal" aria-labelledby="journal-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">JOURNAL</p>
+              <h2 id="journal-title">温浴通信</h2>
+            </div>
+            <a href="#">一覧を見る</a>
+          </div>
+          <div class="article-grid">
+            <article>
+              <p>施設運営</p>
+              <h3>清掃品質がリピート率に与える印象</h3>
+            </article>
+            <article>
+              <p>楽しみ方</p>
+              <h3>短い時間でも満足しやすい入浴ルート</h3>
+            </article>
+            <article>
+              <p>地域紹介</p>
+              <h3>仕事帰りに寄りたい街なかの一湯</h3>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-band" id="about" aria-labelledby="about-title">
+        <div class="section-inner about-copy">
+          <p class="section-kicker">ABOUT</p>
+          <h2 id="about-title">温浴施設を好きになって通う人が、もっと増えてほしい。</h2>
+          <p>
+            スパ人は、温浴施設の清掃事業に携わってきた環境システム社が運営するポータルサイトです。
+            施設と利用者のあいだに、心地よい出会いが増えるきっかけをつくります。
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>スパ人 SPAZINE</span>
+      <a href="#">お問い合わせ</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
