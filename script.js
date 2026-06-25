@@ -49,7 +49,40 @@ const fortuneText = document.querySelector("#fortuneText");
 const facilityPick = document.querySelector("#facilityPick");
 const bathPick = document.querySelector("#bathPick");
 const methodPick = document.querySelector("#methodPick");
+const ageInput = document.querySelector("#ageInput");
+const genderInput = document.querySelector("#genderInput");
+const vibeInput = document.querySelector("#vibeInput");
+const characterImage = document.querySelector("#characterImage");
+const characterName = document.querySelector("#characterName");
+const characterLine = document.querySelector("#characterLine");
 const exampleChips = document.querySelectorAll(".example-chip");
+
+const characters = {
+  guide: {
+    name: "湯乃しずく",
+    image: "assets/characters/guide.jpg",
+    tone: "やさしく寄り添う温浴コンシェルジュ",
+    opener: "大丈夫です。今日の疲れ、ちゃんと湯に預けられます。"
+  },
+  coach: {
+    name: "サウナ隊長アツシ",
+    image: "assets/characters/coach.jpg",
+    tone: "元気に背中を押すサウナコーチ",
+    opener: "任せてください。今日のモヤモヤ、汗と一緒に提出しましょう。"
+  },
+  master: {
+    name: "湯守のおやっさん",
+    image: "assets/characters/master.jpg",
+    tone: "面白く言い切る町の湯守",
+    opener: "ふむ、これは湯案件ですな。肩まで浸かればだいたい話は早い。"
+  },
+  neutral: {
+    name: "湯守ナビ",
+    image: "assets/characters/neutral.jpg",
+    tone: "ほどよい距離感のウェルネス案内役",
+    opener: "では、今の状態を軽く読みます。無理に整えず、湯で調律しましょう。"
+  }
+};
 
 const moodRules = [
   {
@@ -101,13 +134,42 @@ const defaultPrescription = {
   method: "入力待ち"
 };
 
+function chooseCharacter(mood = "reset") {
+  const age = ageInput.value;
+  const gender = genderInput.value;
+  const vibe = vibeInput.value;
+
+  if (vibe === "calm") return characters.guide;
+  if (vibe === "funny") return characters.master;
+  if (vibe === "coach") return characters.coach;
+  if (vibe === "stylish") return characters.neutral;
+  if (mood === "sauna" || mood === "near") return characters.coach;
+  if (age === "50s" || mood === "family") return characters.master;
+  if (gender === "female" && (age === "20s" || age === "30s")) return characters.guide;
+  if (gender === "male" && age === "20s") return characters.coach;
+  return characters.neutral;
+}
+
+function renderCharacter(character, prescription) {
+  characterImage.src = character.image;
+  characterImage.alt = `${character.name}のキャラクター画像`;
+  characterName.textContent = `${character.name} / ${character.tone}`;
+  if (prescription.facility === "入力待ち") {
+    characterLine.textContent = character.opener;
+    return;
+  }
+  characterLine.textContent = `「${prescription.facility}」がよさそうです。お風呂は${prescription.bath}。入り方は、${prescription.method}。`;
+}
+
 function renderFacilities(mood = "reset", prescription = defaultPrescription) {
   const filtered = facilities.filter((facility) => facility.moods.includes(mood)).slice(0, 3);
+  const character = chooseCharacter(mood);
   statusText.textContent = `${filtered.length}件を処方中`;
   fortuneText.textContent = prescription.fortune;
   facilityPick.textContent = prescription.facility;
   bathPick.textContent = prescription.bath;
   methodPick.textContent = prescription.method;
+  renderCharacter(character, prescription);
   results.innerHTML = filtered
     .map((facility) => {
       const tags = facility.tags.map((tag) => `<span>${tag}</span>`).join("");
@@ -182,6 +244,10 @@ exampleChips.forEach((chip) => {
     moodInput.value = chip.dataset.example;
     castFortune();
   });
+});
+
+[ageInput, genderInput, vibeInput].forEach((input) => {
+  input.addEventListener("change", castFortune);
 });
 
 renderFacilities();

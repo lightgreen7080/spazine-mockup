@@ -56,6 +56,42 @@
               <p>悩みや気分をそのまま入力してください。</p>
               <p>スパ人が、施設・お風呂・入り方まで面白おかしく提案します。</p>
             </div>
+            <div class="profile-grid" aria-label="ユーザー属性">
+              <label>
+                <span>年代</span>
+                <select id="ageInput">
+                  <option value="20s">20代</option>
+                  <option value="30s" selected>30代</option>
+                  <option value="40s">40代</option>
+                  <option value="50s">50代以上</option>
+                </select>
+              </label>
+              <label>
+                <span>性別</span>
+                <select id="genderInput">
+                  <option value="any" selected>指定なし</option>
+                  <option value="female">女性</option>
+                  <option value="male">男性</option>
+                </select>
+              </label>
+              <label>
+                <span>好きな案内役</span>
+                <select id="vibeInput">
+                  <option value="auto" selected>おまかせ</option>
+                  <option value="calm">やさしく聞いてほしい</option>
+                  <option value="funny">面白く背中を押してほしい</option>
+                  <option value="coach">元気に導いてほしい</option>
+                  <option value="stylish">ほどよい距離感がいい</option>
+                </select>
+              </label>
+            </div>
+            <div class="character-stage" aria-live="polite">
+              <img id="characterImage" src="assets/characters/neutral.jpg" alt="スパ人の案内キャラクター">
+              <div class="speech-bubble">
+                <p class="character-name" id="characterName">湯守ナビ</p>
+                <p id="characterLine">あなたの属性と悩みに合わせて、話しやすそうな案内役が出てきます。</p>
+              </div>
+            </div>
             <label class="mood-input-label" for="moodInput">今の悩み・気分</label>
             <div class="mood-input-row">
               <textarea id="moodInput" rows="3" placeholder="例：仕事で頭がパンパン。静かなところで現実をふやかしたい。"></textarea>
