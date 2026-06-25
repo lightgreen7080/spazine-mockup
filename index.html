@@ -46,30 +46,44 @@
           <div class="finder-head">
             <div>
               <p class="section-kicker">SPAZINE GUIDE</p>
-              <h2>今のあなたに合う施設</h2>
+              <h2>今の悩み、湯でほどきます</h2>
             </div>
             <p class="finder-status" id="finderStatus">3件をおすすめ中</p>
           </div>
 
           <div class="oracle-panel" aria-label="気分を入力しておすすめを占う">
             <div class="oracle-copy">
-              <p>今の気分をそのまま入力してください。</p>
-              <p>スパ人が、今日のあなたに合う一湯を占うように案内します。</p>
+              <p>悩みや気分をそのまま入力してください。</p>
+              <p>スパ人が、施設・お風呂・入り方まで面白おかしく提案します。</p>
             </div>
-            <label class="mood-input-label" for="moodInput">今日の気分</label>
+            <label class="mood-input-label" for="moodInput">今の悩み・気分</label>
             <div class="mood-input-row">
-              <textarea id="moodInput" rows="3" placeholder="例：仕事で疲れた。静かなところでゆっくり整いたい。"></textarea>
-              <button class="oracle-button" id="oracleButton" type="button" onclick="window.castFortune()">今日の一湯を占う</button>
+              <textarea id="moodInput" rows="3" placeholder="例：仕事で頭がパンパン。静かなところで現実をふやかしたい。"></textarea>
+              <button class="oracle-button" id="oracleButton" type="button" onclick="window.castFortune()">湯の処方をもらう</button>
             </div>
             <div class="example-row" aria-label="入力例">
-              <button class="example-chip" type="button" data-example="仕事帰りに近場でさっと汗を流したい">仕事帰りに近場で</button>
-              <button class="example-chip" type="button" data-example="家族でゆっくり過ごせる温浴施設に行きたい">家族でゆっくり</button>
-              <button class="example-chip" type="button" data-example="今日はサウナでしっかり整いたい">サウナで整いたい</button>
-              <button class="example-chip" type="button" data-example="休日なので少し遠出して景色のいい温泉に行きたい">少し遠出したい</button>
+              <button class="example-chip" type="button" data-example="仕事帰りで脳みそが通知だらけ。近場でさっと無になりたい">脳みそ通知だらけ</button>
+              <button class="example-chip" type="button" data-example="家族で行きたいけど、子どもも大人も機嫌よく帰りたい">家族全員ごきげん希望</button>
+              <button class="example-chip" type="button" data-example="今日はサウナで汗と一緒にモヤモヤを提出したい">モヤモヤ提出したい</button>
+              <button class="example-chip" type="button" data-example="休日なので少し遠出して、景色のいい温泉で自分を再起動したい">自分を再起動したい</button>
             </div>
             <div class="fortune-card" id="fortuneCard">
-              <p class="fortune-label">今日の湯占い</p>
-              <p id="fortuneText">まずは今の気分を入れてください。言葉の温度に合わせて、スパ人が一湯を選びます。</p>
+              <p class="fortune-label">今日の湯処方</p>
+              <p id="fortuneText">まずは今の悩みや気分を入れてください。スパ人が、あなたの状態を勝手に深読みして湯の処方を出します。</p>
+              <div class="prescription-grid" aria-label="おすすめ提案">
+                <section>
+                  <span>おすすめ施設</span>
+                  <strong id="facilityPick">入力待ち</strong>
+                </section>
+                <section>
+                  <span>おすすめのお風呂</span>
+                  <strong id="bathPick">入力待ち</strong>
+                </section>
+                <section>
+                  <span>おすすめの入り方</span>
+                  <strong id="methodPick">入力待ち</strong>
+                </section>
+              </div>
             </div>
           </div>
 

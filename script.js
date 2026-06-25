@@ -46,40 +46,68 @@ const statusText = document.querySelector("#finderStatus");
 const moodInput = document.querySelector("#moodInput");
 const oracleButton = document.querySelector("#oracleButton");
 const fortuneText = document.querySelector("#fortuneText");
+const facilityPick = document.querySelector("#facilityPick");
+const bathPick = document.querySelector("#bathPick");
+const methodPick = document.querySelector("#methodPick");
 const exampleChips = document.querySelectorAll(".example-chip");
 
 const moodRules = [
   {
     mood: "sauna",
-    words: ["サウナ", "整", "汗", "熱", "水風呂", "外気浴", "リセット"],
-    fortune: "今日は体の奥にこもった熱を出す日。サウナと外気浴で、頭の中まで軽くなる一湯が合いそうです。"
+    words: ["サウナ", "整", "汗", "熱", "水風呂", "外気浴", "リセット", "モヤモヤ"],
+    fortune: "本日のあなたは、心の中に小さな会議室があり、全員が同時にしゃべっています。汗で議事録を流しましょう。",
+    facility: "蒸ノ杜サウナ",
+    bath: "高温サウナからの水風呂、最後に外気浴",
+    method: "8分サウナ、30秒水風呂、外気浴で『もう知らん』を3セット"
   },
   {
     mood: "family",
-    words: ["家族", "子ども", "子供", "親子", "みんな", "食事", "ゆっくり"],
-    fortune: "今日は誰かと過ごす時間が運気を整える日。食事や休憩も含めて、長めに滞在できる一湯が合いそうです。"
+    words: ["家族", "子ども", "子供", "親子", "みんな", "食事", "ゆっくり", "機嫌"],
+    fortune: "本日のあなたは、全員の機嫌を守る現場監督です。湯上がりの食事処まで含めて勝ち筋を作りましょう。",
+    facility: "湯けむり小路",
+    bath: "広めの内湯と、子どもが飽きにくい変わり湯",
+    method: "先に軽く入浴、食事で休戦、最後にもう一度湯。帰り道の平和まで設計"
   },
   {
     mood: "near",
-    words: ["近", "さっと", "仕事帰り", "帰り", "短時間", "駅", "今すぐ", "手軽"],
-    fortune: "今日は遠くまで頑張らない日。近場でさっと湯に入って、帰り道の足取りを軽くする一湯が合いそうです。"
+    words: ["近", "さっと", "仕事帰り", "帰り", "短時間", "駅", "今すぐ", "手軽", "通知"],
+    fortune: "本日のあなたは、スマホより先に自分を充電すべき状態です。遠征は不要、近場で現実を一回ミュートしましょう。",
+    facility: "駅前湯処 あかり",
+    bath: "熱すぎない主浴槽と、仕上げのぬる湯",
+    method: "洗う、浸かる、ぼーっとする。滞在45分で『今日はここまで』を宣言"
   },
   {
     mood: "trip",
-    words: ["遠出", "景色", "休日", "旅", "ドライブ", "自然", "山", "のんびり"],
-    fortune: "今日は少しだけ日常の外へ出る日。景色や道中まで楽しめる、記憶に残る一湯が合いそうです。"
+    words: ["遠出", "景色", "休日", "旅", "ドライブ", "自然", "山", "のんびり", "再起動"],
+    fortune: "本日のあなたは、日常のタブを開きすぎています。景色のいい湯で、心のブラウザを再起動しましょう。",
+    facility: "里山温泉 風待ち",
+    bath: "景色が見える露天風呂",
+    method: "到着したら急がず一服。露天で空を見る時間を長めに取り、帰りに甘いもの"
   },
   {
     mood: "solo",
-    words: ["ひとり", "一人", "静か", "疲れ", "落ち着", "休み", "癒", "ぼーっと"],
-    fortune: "今日は静けさが味方になる日。ひとりで余白を取り戻せる、落ち着いた一湯が合いそうです。"
+    words: ["ひとり", "一人", "静か", "疲れ", "落ち着", "休み", "癒", "ぼーっと", "頭"],
+    fortune: "本日のあなたは、脳内に未読メールが住み着いています。静かな湯で、通知音のしない自分に戻りましょう。",
+    facility: "森ノ湯テラス",
+    bath: "露天風呂と休憩スペース",
+    method: "最初の10分は何もしない。考えごとは湯気に預け、上がったら水分補給して勝利"
   }
 ];
 
-function renderFacilities(mood = "reset", fortune = "まずは今の気分を入れてください。言葉の温度に合わせて、スパ人が一湯を選びます。") {
+const defaultPrescription = {
+  fortune: "まずは今の悩みや気分を入れてください。スパ人が、あなたの状態を勝手に深読みして湯の処方を出します。",
+  facility: "入力待ち",
+  bath: "入力待ち",
+  method: "入力待ち"
+};
+
+function renderFacilities(mood = "reset", prescription = defaultPrescription) {
   const filtered = facilities.filter((facility) => facility.moods.includes(mood)).slice(0, 3);
-  statusText.textContent = `${filtered.length}件をおすすめ中`;
-  fortuneText.textContent = fortune;
+  statusText.textContent = `${filtered.length}件を処方中`;
+  fortuneText.textContent = prescription.fortune;
+  facilityPick.textContent = prescription.facility;
+  bathPick.textContent = prescription.bath;
+  methodPick.textContent = prescription.method;
   results.innerHTML = filtered
     .map((facility) => {
       const tags = facility.tags.map((tag) => `<span>${tag}</span>`).join("");
@@ -106,7 +134,7 @@ function readMood(text) {
   if (!normalized) {
     return {
       mood: "reset",
-      fortune: "まずは今の気分を入れてください。言葉の温度に合わせて、スパ人が一湯を選びます。"
+      ...defaultPrescription
     };
   }
 
@@ -119,7 +147,10 @@ function readMood(text) {
   if (scored[0].score === 0) {
     return {
       mood: "reset",
-      fortune: "今日はまだ気分が輪郭を探している日。まずは選びやすい三つの一湯から、直感に近い場所を眺めてみてください。"
+      fortune: "本日のあなたは、まだ悩みの名前が決まっていないタイプです。こういう日は直感が一番えらいので、気になった湯を試しましょう。",
+      facility: "森ノ湯テラス、または最初に目が合った施設",
+      bath: "露天風呂か、いちばん空いているお風呂",
+      method: "難しく考えず、まず肩まで浸かる。答えは湯上がりの顔色が知っています"
     };
   }
 
@@ -128,7 +159,7 @@ function readMood(text) {
 
 function castFortune() {
   const reading = readMood(moodInput.value);
-  renderFacilities(reading.mood, reading.fortune);
+  renderFacilities(reading.mood, reading);
 }
 
 window.castFortune = castFortune;

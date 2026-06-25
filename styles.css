@@ -322,6 +322,36 @@ h3 {
   line-height: 1.7;
 }
 
+.prescription-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.prescription-grid section {
+  min-height: 112px;
+  padding: 14px;
+  border: 1px solid #d7e5e1;
+  border-radius: 8px;
+  background: #f8fcfa;
+}
+
+.prescription-grid span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.prescription-grid strong {
+  display: block;
+  color: var(--teal-dark);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
 .result-layout {
   display: grid;
   grid-template-columns: 340px minmax(0, 1fr);
@@ -653,6 +683,10 @@ h3 {
   }
 
   .mood-input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .prescription-grid {
     grid-template-columns: 1fr;
   }
 
