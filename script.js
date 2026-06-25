@@ -43,11 +43,43 @@ const facilities = [
 
 const results = document.querySelector("#results");
 const statusText = document.querySelector("#finderStatus");
-const choices = document.querySelectorAll(".choice");
+const moodInput = document.querySelector("#moodInput");
+const oracleButton = document.querySelector("#oracleButton");
+const fortuneText = document.querySelector("#fortuneText");
+const exampleChips = document.querySelectorAll(".example-chip");
 
-function renderFacilities(mood = "reset") {
+const moodRules = [
+  {
+    mood: "sauna",
+    words: ["サウナ", "整", "汗", "熱", "水風呂", "外気浴", "リセット"],
+    fortune: "今日は体の奥にこもった熱を出す日。サウナと外気浴で、頭の中まで軽くなる一湯が合いそうです。"
+  },
+  {
+    mood: "family",
+    words: ["家族", "子ども", "子供", "親子", "みんな", "食事", "ゆっくり"],
+    fortune: "今日は誰かと過ごす時間が運気を整える日。食事や休憩も含めて、長めに滞在できる一湯が合いそうです。"
+  },
+  {
+    mood: "near",
+    words: ["近", "さっと", "仕事帰り", "帰り", "短時間", "駅", "今すぐ", "手軽"],
+    fortune: "今日は遠くまで頑張らない日。近場でさっと湯に入って、帰り道の足取りを軽くする一湯が合いそうです。"
+  },
+  {
+    mood: "trip",
+    words: ["遠出", "景色", "休日", "旅", "ドライブ", "自然", "山", "のんびり"],
+    fortune: "今日は少しだけ日常の外へ出る日。景色や道中まで楽しめる、記憶に残る一湯が合いそうです。"
+  },
+  {
+    mood: "solo",
+    words: ["ひとり", "一人", "静か", "疲れ", "落ち着", "休み", "癒", "ぼーっと"],
+    fortune: "今日は静けさが味方になる日。ひとりで余白を取り戻せる、落ち着いた一湯が合いそうです。"
+  }
+];
+
+function renderFacilities(mood = "reset", fortune = "まずは今の気分を入れてください。言葉の温度に合わせて、スパ人が一湯を選びます。") {
   const filtered = facilities.filter((facility) => facility.moods.includes(mood)).slice(0, 3);
   statusText.textContent = `${filtered.length}件をおすすめ中`;
+  fortuneText.textContent = fortune;
   results.innerHTML = filtered
     .map((facility) => {
       const tags = facility.tags.map((tag) => `<span>${tag}</span>`).join("");
@@ -69,11 +101,55 @@ function renderFacilities(mood = "reset") {
     .join("");
 }
 
-choices.forEach((choice) => {
-  choice.addEventListener("click", () => {
-    choices.forEach((item) => item.classList.remove("is-active"));
-    choice.classList.add("is-active");
-    renderFacilities(choice.dataset.mood);
+function readMood(text) {
+  const normalized = text.trim();
+  if (!normalized) {
+    return {
+      mood: "reset",
+      fortune: "まずは今の気分を入れてください。言葉の温度に合わせて、スパ人が一湯を選びます。"
+    };
+  }
+
+  const scored = moodRules.map((rule) => ({
+    ...rule,
+    score: rule.words.reduce((total, word) => total + (normalized.includes(word) ? 1 : 0), 0)
+  }));
+  scored.sort((a, b) => b.score - a.score);
+
+  if (scored[0].score === 0) {
+    return {
+      mood: "reset",
+      fortune: "今日はまだ気分が輪郭を探している日。まずは選びやすい三つの一湯から、直感に近い場所を眺めてみてください。"
+    };
+  }
+
+  return scored[0];
+}
+
+function castFortune() {
+  const reading = readMood(moodInput.value);
+  renderFacilities(reading.mood, reading.fortune);
+}
+
+window.castFortune = castFortune;
+oracleButton.addEventListener("click", castFortune);
+
+moodInput.addEventListener("input", () => {
+  if (moodInput.value.trim().length >= 4) {
+    castFortune();
+  }
+});
+
+moodInput.addEventListener("keydown", (event) => {
+  if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+    castFortune();
+  }
+});
+
+exampleChips.forEach((chip) => {
+  chip.addEventListener("click", () => {
+    moodInput.value = chip.dataset.example;
+    castFortune();
   });
 });
 
