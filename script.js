@@ -5,7 +5,8 @@ const facilities = [
     type: "日帰り温泉",
     copy: "緑に囲まれた露天風呂と広い休憩スペース。静かに過ごしたい日に選びやすい一軒です。",
     tags: ["露天風呂", "サウナ", "ひとり時間", "駐車場あり"],
-    moods: ["solo", "sauna", "near", "reset"]
+    moods: ["solo", "sauna", "near", "reset"],
+    story: "森ノ湯テラスの静けさを読む"
   },
   {
     name: "湯けむり小路",
@@ -13,7 +14,8 @@ const facilities = [
     type: "スーパー銭湯",
     copy: "食事処とキッズスペースを備えた、家族のお出かけに向いた温浴施設です。",
     tags: ["家族向け", "食事処", "駐車場あり", "子連れOK"],
-    moods: ["family", "near", "reset"]
+    moods: ["family", "near", "reset"],
+    story: "湯けむり小路の過ごし方を読む"
   },
   {
     name: "蒸ノ杜サウナ",
@@ -21,7 +23,8 @@ const facilities = [
     type: "サウナ",
     copy: "高温サウナと外気浴スペースが魅力。短時間でも気分を切り替えたい日に。",
     tags: ["サウナ", "外気浴", "仕事帰り", "深夜営業"],
-    moods: ["sauna", "solo", "reset"]
+    moods: ["sauna", "solo", "reset"],
+    story: "蒸ノ杜サウナの整い方を読む"
   },
   {
     name: "里山温泉 風待ち",
@@ -29,7 +32,8 @@ const facilities = [
     type: "温泉",
     copy: "少し足を伸ばして訪れたい、山あいの静かな温泉。休日の小旅行に合います。",
     tags: ["遠出", "源泉かけ流し", "露天風呂", "景色"],
-    moods: ["trip", "solo", "reset"]
+    moods: ["trip", "solo", "reset"],
+    story: "里山温泉 風待ちの旅気分を読む"
   },
   {
     name: "駅前湯処 あかり",
@@ -37,7 +41,8 @@ const facilities = [
     type: "銭湯",
     copy: "駅から近く、帰宅前にさっと立ち寄れる街なかの湯処です。",
     tags: ["駅近", "近場", "仕事帰り", "短時間"],
-    moods: ["near", "reset"]
+    moods: ["near", "reset"],
+    story: "駅前湯処 あかりの寄り道を読む"
   }
 ];
 
@@ -55,6 +60,8 @@ const vibeInput = document.querySelector("#vibeInput");
 const characterImage = document.querySelector("#characterImage");
 const characterName = document.querySelector("#characterName");
 const characterLine = document.querySelector("#characterLine");
+const mapLink = document.querySelector("#mapLink");
+const storyLink = document.querySelector("#storyLink");
 const exampleChips = document.querySelectorAll(".example-chip");
 
 const characters = {
@@ -161,6 +168,15 @@ function renderCharacter(character, prescription) {
   characterLine.textContent = `「${prescription.facility}」がよさそうです。お風呂は${prescription.bath}。入り方は、${prescription.method}。`;
 }
 
+function renderPrescriptionLinks(prescription) {
+  const facility = facilities.find((item) => prescription.facility.includes(item.name));
+  const query = facility ? `${facility.name} ${facility.area}` : "温浴施設";
+  mapLink.href = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+  mapLink.textContent = facility ? `${facility.name}をGoogleマップで見る` : "Googleマップで探す";
+  storyLink.href = "#journal";
+  storyLink.textContent = facility ? facility.story : "施設ストーリーを読む";
+}
+
 function renderFacilities(mood = "reset", prescription = defaultPrescription) {
   const filtered = facilities.filter((facility) => facility.moods.includes(mood)).slice(0, 3);
   const character = chooseCharacter(mood);
@@ -170,6 +186,7 @@ function renderFacilities(mood = "reset", prescription = defaultPrescription) {
   bathPick.textContent = prescription.bath;
   methodPick.textContent = prescription.method;
   renderCharacter(character, prescription);
+  renderPrescriptionLinks(prescription);
   results.innerHTML = filtered
     .map((facility) => {
       const tags = facility.tags.map((tag) => `<span>${tag}</span>`).join("");
